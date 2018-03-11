@@ -1,0 +1,63 @@
+<html>
+    <body>
+        <script src="three.min.js"></script>
+        <script type="three.js"></script>
+        <script src="TrackballControls.js"></script>
+
+        <script>
+            var camera, controls, scene, renderer;
+
+            init();
+            animate();
+
+            function init(){
+                camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 1, 1000);
+                camera.position.z = 500;
+
+                controls = new THREE.TrackballControls( camera );
+                controls.addEventListener('change', render);
+
+                scene = new THREE.Scene();
+
+                for( var i=1;i<6;i++){
+                    var geometry = new THREE.CubeGeometry(50,50,50);
+                    var material = new THREE.MeshBasicMaterial({
+                color: 'lightblue',
+                wireframe: 'true',
+                wireframeLinewidth: '10'
+            });
+                    var mesh = new THREE.Mesh( geometry, material);
+                    mesh.position.y=50*(i-3);
+                    scene.add(mesh);
+                }
+                for(var i =1 ; i<3 ; i++){
+                    var geometry = new THREE.CubeGeometry(50,50,50);
+                    var material = new THREE.MeshBasicMaterial({
+                color: 'lightblue',
+                wireframe: 'true',
+                wireframeLinewidth: '10'
+            });
+                    var mesh = new THREE.Mesh( geometry, material);
+                    mesh.position.x=50;
+                    mesh.position.y=50*(i-3);
+                    scene.add(mesh);                    
+                }
+
+
+                renderer = new THREE.WebGLRenderer();
+                renderer.setSize(window.innerWidth, window.innerHeight)
+                document.body.appendChild(renderer.domElement);
+            }
+
+            function animate(){
+                requestAnimationFrame( animate );
+                controls.update();
+            }
+
+            function render(){
+                renderer.render( scene, camera );
+            } 
+
+        </script>
+    </body>
+</html>
